@@ -1,5 +1,6 @@
 package com.company.animatedmodels;
 
+import android.animation.ObjectAnimator;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.google.ar.core.Anchor;
@@ -16,15 +17,12 @@ import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.QuaternionEvaluator;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
-import java.util.function.Predicate;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "Debug";
@@ -73,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                             showCancelButton(cancel, islandNode, anchorNode);
                         }
                     });
+
+                    ObjectAnimator animator = createAnimator();
+                    animator.setTarget(islandNode);
+                    animator.start();
                 }
         );
     }
@@ -88,6 +90,28 @@ public class MainActivity extends AppCompatActivity {
                 button.setVisibility(ImageView.GONE);
             }
         });
+    }
+
+    private static ObjectAnimator createAnimator() {
+        Quaternion orientation1 = Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), 0);
+        Quaternion orientation2 = Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), 120);
+        Quaternion orientation3 = Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), 240);
+        Quaternion orientation4 = Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), 360);
+
+        ObjectAnimator roundAnimation = new ObjectAnimator();
+        roundAnimation.setObjectValues(orientation1, orientation2, orientation3, orientation4);
+
+        roundAnimation.setPropertyName("localRotation");
+
+        roundAnimation.setEvaluator(new QuaternionEvaluator());
+
+        roundAnimation.setRepeatCount(ObjectAnimator.INFINITE);
+        roundAnimation.setRepeatMode(ObjectAnimator.RESTART);
+        roundAnimation.setInterpolator(new LinearInterpolator());
+        roundAnimation.setAutoCancel(true);
+        roundAnimation.setDuration(30000);
+
+        return roundAnimation;
     }
 }
 
