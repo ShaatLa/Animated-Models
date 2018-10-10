@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Animated Models</string>
+    <string name="cancelButton">Delete Island</string>
 </resources>
