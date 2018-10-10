@@ -322,6 +322,7 @@
     file: 'sampledata/models/island.obj',
     name: 'island',
     recenter: 'root',
+    scale: 0.5,
   },
   version: '0.52:1',
 }
