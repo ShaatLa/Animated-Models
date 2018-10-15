@@ -35,7 +35,12 @@ dependencies {
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-sceneform.asset('sampledata/models/island.obj',
+sceneform.asset('sampledata/models/clouds.obj',
         'default',
-        'sampledata/models/island.sfa',
-        'src/main/assets/island')
+        'sampledata/models/clouds.sfa',
+        'src/main/assets/clouds')
+
+sceneform.asset('sampledata/models/mountains.obj',
+        'default',
+        'sampledata/models/mountains.sfa',
+        'src/main/assets/mountains')
