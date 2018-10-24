@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     ModelRenderable islandRenderable;
     ModelRenderable cloudsRenderable;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void showCancelButton(ImageView button, TransformableNode nodeToDelete, AnchorNode parentNode)
-    {
+    public void showCancelButton(ImageView button, TransformableNode nodeToDelete, AnchorNode parentNode) {
         button.setVisibility(ImageView.VISIBLE);
         button.setOnClickListener(v -> {
-            arFragment.getArSceneView().getScene().getChildren().contains(nodeToDelete);
-            arFragment.getArSceneView().getScene().removeChild(parentNode);
-            button.setVisibility(ImageView.GONE);
+            if (arFragment.getArSceneView().getScene().getChildren().contains(nodeToDelete)) {
+                arFragment.getArSceneView().getScene().removeChild(parentNode);
+                button.setVisibility(ImageView.GONE);
+            }
         });
     }
 
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         roundAnimation.setRepeatCount(ObjectAnimator.INFINITE);
         roundAnimation.setInterpolator(new LinearInterpolator());
         roundAnimation.setAutoCancel(true);
-        roundAnimation.setDuration(30000);
+        roundAnimation.setDuration(32000);
         roundAnimation.setTarget(targetNode);
 
         return roundAnimation;
